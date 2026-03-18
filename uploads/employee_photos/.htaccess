@@ -1,0 +1,6 @@
+# Prevent PHP execution in uploads directory
+<FilesMatch "\.ph(p[2-9]?|tml)$">
+  Require all denied
+</FilesMatch>
+Options -ExecCGI -Indexes
+AddHandler cgi-script .php .pl .py .jsp .asp .sh .cgi

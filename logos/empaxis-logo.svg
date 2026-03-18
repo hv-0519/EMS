@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 88" fill="none">
+  <defs>
+    <linearGradient id="arcG" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#10B981"/>
+      <stop offset="100%" stop-color="#059669"/>
+    </linearGradient>
+    <linearGradient id="nodeG" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#34D399"/>
+      <stop offset="100%" stop-color="#10B981"/>
+    </linearGradient>
+  </defs>
+
+  <!-- ── ICON MARK ── -->
+  <!-- Outer ghost ring -->
+  <circle cx="44" cy="44" r="40" stroke="#10B981" stroke-width="1.5" fill="none" opacity="0.25"/>
+  <!-- Inner ghost ring -->
+  <path d="M 21 30 A 26 26 0 1 0 67 30" stroke="#10B981" stroke-width="1.5" stroke-linecap="round" fill="none" opacity="0.18"/>
+  <!-- THE AXIS — main bold arc -->
+  <path d="M 14 26 A 34 34 0 1 0 74 26" stroke="url(#arcG)" stroke-width="5" stroke-linecap="round" fill="none"/>
+
+  <!-- E letterform — vertical spine -->
+  <rect x="30" y="26" width="5"  height="24" rx="2.5" fill="#0D1117"/>
+  <!-- E top bar -->
+  <rect x="30" y="26" width="22" height="5"  rx="2.5" fill="#0D1117"/>
+  <!-- E mid bar -->
+  <rect x="30" y="36.5" width="16" height="4.5" rx="2.25" fill="#0D1117"/>
+  <!-- E bottom bar -->
+  <rect x="30" y="45" width="22" height="5"  rx="2.5" fill="#0D1117"/>
+
+  <!-- Employee node -->
+  <circle cx="62" cy="20" r="5.5" fill="url(#nodeG)"/>
+  <!-- Node aura -->
+  <circle cx="62" cy="20" r="8.5" stroke="#10B981" stroke-width="1.2" fill="none" opacity="0.25"/>
+  <!-- Connector -->
+  <line x1="52" y1="26" x2="57.5" y2="23.5" stroke="#10B981" stroke-width="1.5" stroke-linecap="round" stroke-dasharray="2.5 2.5" opacity="0.55"/>
+  <!-- Secondary node -->
+  <circle cx="60" cy="44" r="3" fill="#10B981" opacity="0.45"/>
+
+  <!-- ── WORDMARK ── -->
+  <text x="96" y="52"
+        font-family="'Syne','Manrope','Segoe UI',sans-serif"
+        font-size="38"
+        font-weight="800"
+        letter-spacing="-1.5"
+        fill="#0D1117">Emp</text>
+  <text x="163" y="52"
+        font-family="'Syne','Manrope','Segoe UI',sans-serif"
+        font-size="38"
+        font-weight="800"
+        letter-spacing="-1.5"
+        fill="#10B981">Axis</text>
+
+  <!-- Tagline -->
+  <text x="97" y="68"
+        font-family="'DM Sans','Segoe UI',sans-serif"
+        font-size="9"
+        font-weight="500"
+        letter-spacing="3"
+        fill="#9BA89A">HR · PEOPLE · PLATFORM</text>
+</svg>

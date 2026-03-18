@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>EmpAxis — Brand Identity</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --g:  #10B981;
+  --gd: #059669;
+  --gl: #D1FAE5;
+  --ink: #0D1117;
+  --bg: #F5F7F2;
+}
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  min-height: 100vh;
+}
+
+/* ─────────────────────────────────────────
+   SECTION UTILITY
+───────────────────────────────────────── */
+.section {
+  padding: 72px 64px;
+  border-bottom: 1px solid #E2E8E0;
+}
+.section-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #9BA89A;
+  margin-bottom: 40px;
+}
+
+/* ─────────────────────────────────────────
+   HERO — MAIN LOGO ON CREAM
+───────────────────────────────────────── */
+.hero {
+  min-height: 380px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #F5F7F2;
+}
+
+/* ─────────────────────────────────────────
+   THE LOGO LOCKUP
+───────────────────────────────────────── */
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0;
+  position: relative;
+}
+
+.logo-mark {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.logo-text-group {
+  display: flex;
+  flex-direction: column;
+  margin-left: 20px;
+  line-height: 1;
+}
+
+.logo-name {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  letter-spacing: -1.5px;
+  line-height: 0.92;
+}
+.logo-name .emp  { color: var(--ink); }
+.logo-name .axis { color: var(--g);  }
+
+.logo-tagline {
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 500;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #9BA89A;
+  margin-top: 8px;
+}
+
+/* ─────────────────────────────────────────
+   DARK PANEL
+───────────────────────────────────────── */
+.dark-panel {
+  background: var(--ink);
+}
+.dark-panel .logo-name .emp { color: #F0FFF8; }
+.dark-panel .logo-tagline   { color: rgba(16,185,129,0.45); }
+
+/* ─────────────────────────────────────────
+   GRID OF VARIANTS
+───────────────────────────────────────── */
+.variants-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 340px;
+}
+.v-cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 48px;
+}
+.v-cell + .v-cell { border-left: 1px solid #E2E8E0; }
+.v-cell-dark  { background: #0D1117; }
+.v-cell-green { background: var(--g); }
+
+/* green bg overrides */
+.v-cell-green .logo-name .emp  { color: #fff; }
+.v-cell-green .logo-name .axis { color: #D1FAE5; }
+.v-cell-green .logo-tagline    { color: rgba(255,255,255,0.45); }
+
+/* ─────────────────────────────────────────
+   ICON GRID
+───────────────────────────────────────── */
+.icon-strip {
+  display: flex;
+  gap: 40px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.icon-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+.icon-item span {
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #9BA89A;
+}
+
+/* ─────────────────────────────────────────
+   SIZES ROW
+───────────────────────────────────────── */
+.sizes-row {
+  display: flex;
+  align-items: center;
+  gap: 56px;
+  flex-wrap: wrap;
+}
+.size-item { display: flex; flex-direction: column; gap: 14px; }
+.size-tag {
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #9BA89A;
+}
+
+/* ─────────────────────────────────────────
+   FAVICON ROW
+───────────────────────────────────────── */
+.fav-row {
+  display: flex;
+  align-items: flex-end;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+.fav-item { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+.fav-item span {
+  font-size: 9px; font-weight: 600; letter-spacing: 2px;
+  text-transform: uppercase; color: #9BA89A;
+}
+
+/* ─────────────────────────────────────────
+   PALETTE
+───────────────────────────────────────── */
+.palette { display: flex; gap: 16px; flex-wrap: wrap; }
+.swatch {
+  width: 120px; height: 80px; border-radius: 12px;
+  display: flex; flex-direction: column; justify-content: flex-end;
+  padding: 12px 14px; position: relative;
+}
+.swatch-name { font-size: 11px; font-weight: 700; }
+.swatch-hex  { font-size: 10px; font-family: monospace; opacity: 0.65; margin-top: 2px; }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════
+     HERO — LIGHT BACKGROUND
+══════════════════════════════════════════ -->
+<div class="hero section">
+  <div class="section-label" style="position:absolute;top:32px;left:64px">EmpAxis · Brand Identity 2025</div>
+
+  <!-- THE LOGO -->
+  <div class="logo">
+    <!-- ICON MARK -->
+    <div class="logo-mark">
+      <svg width="88" height="88" viewBox="0 0 88 88" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <radialGradient id="glow" cx="50%" cy="45%" r="55%" fx="50%" fy="45%">
+            <stop offset="0%"   stop-color="#34D399" stop-opacity="0.25"/>
+            <stop offset="100%" stop-color="#059669" stop-opacity="0"/>
+          </radialGradient>
+          <linearGradient id="arcGrad" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%"   stop-color="#10B981"/>
+            <stop offset="100%" stop-color="#059669"/>
+          </linearGradient>
+          <linearGradient id="topGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%"   stop-color="#34D399"/>
+            <stop offset="100%" stop-color="#10B981"/>
+          </linearGradient>
+        </defs>
+
+        <!-- Outer glow aura -->
+        <circle cx="44" cy="44" r="43" fill="url(#glow)"/>
+
+        <!-- Outer ring — thin precise circle -->
+        <circle cx="44" cy="44" r="40" stroke="#10B981" stroke-width="1.5" fill="none" opacity="0.3"/>
+
+        <!-- Bold outer arc — bottom 3/4, heavy weight — THE AXIS -->
+        <path
+          d="M 14 26 A 34 34 0 1 0 74 26"
+          stroke="url(#arcGrad)"
+          stroke-width="5"
+          stroke-linecap="round"
+          fill="none"
+        />
+
+        <!-- Second inner arc — offset, lighter -->
+        <path
+          d="M 21 30 A 26 26 0 1 0 67 30"
+          stroke="#10B981"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          fill="none"
+          opacity="0.2"
+        />
+
+        <!-- The E letterform — built from precise rectangles, centered -->
+        <!-- Vertical spine -->
+        <rect x="30" y="26" width="5" height="24" rx="2.5" fill="#0D1117"/>
+        <!-- Top bar — full width -->
+        <rect x="30" y="26" width="22" height="5" rx="2.5" fill="#0D1117"/>
+        <!-- Mid bar — 75% width -->
+        <rect x="30" y="36.5" width="16" height="4.5" rx="2.25" fill="#0D1117"/>
+        <!-- Bottom bar — full width -->
+        <rect x="30" y="45" width="22" height="5" rx="2.5" fill="#0D1117"/>
+
+        <!-- NODE: top-right dot — employee node -->
+        <circle cx="62" cy="20" r="5.5" fill="url(#topGrad)"/>
+        <!-- Node ring pulse -->
+        <circle cx="62" cy="20" r="8.5" stroke="#10B981" stroke-width="1.2" fill="none" opacity="0.3"/>
+
+        <!-- Connector line from E top-right corner to node -->
+        <line x1="52" y1="26" x2="57.5" y2="23.5"
+              stroke="#10B981" stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-dasharray="2.5 2.5"
+              opacity="0.6"/>
+
+        <!-- Small secondary node — mid right -->
+        <circle cx="60" cy="44" r="3" fill="#10B981" opacity="0.5"/>
+        <line x1="46" y1="38.75" x2="57" y2="44"
+              stroke="#10B981" stroke-width="1"
+              stroke-linecap="round"
+              stroke-dasharray="2 2"
+              opacity="0.4"/>
+
+        <!-- Tiny bottom node -->
+        <circle cx="44" cy="78" r="2" fill="#059669" opacity="0.5"/>
+      </svg>
+    </div>
+
+    <!-- WORDMARK -->
+    <div class="logo-text-group">
+      <div class="logo-name" style="font-size: 42px;">
+        <span class="emp">Emp</span><span class="axis">Axis</span>
+      </div>
+      <div class="logo-tagline" style="font-size: 9.5px;">HR &nbsp;·&nbsp; People &nbsp;·&nbsp; Platform</div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+     DARK + GREEN VARIANTS
+══════════════════════════════════════════ -->
+<div class="variants-grid">
+
+  <!-- DARK -->
+  <div class="v-cell v-cell-dark">
+    <div class="logo">
+      <div class="logo-mark">
+        <svg width="72" height="72" viewBox="0 0 88 88" fill="none">
+          <defs>
+            <linearGradient id="ag2" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%"  stop-color="#34D399"/>
+              <stop offset="100%" stop-color="#059669"/>
+            </linearGradient>
+            <linearGradient id="tg2" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%"  stop-color="#6EE7B7"/>
+              <stop offset="100%" stop-color="#10B981"/>
+            </linearGradient>
+          </defs>
+          <circle cx="44" cy="44" r="40" stroke="#10B981" stroke-width="1.5" fill="none" opacity="0.15"/>
+          <path d="M 14 26 A 34 34 0 1 0 74 26" stroke="url(#ag2)" stroke-width="5" stroke-linecap="round" fill="none"/>
+          <path d="M 21 30 A 26 26 0 1 0 67 30" stroke="#10B981" stroke-width="1.5" stroke-linecap="round" fill="none" opacity="0.15"/>
+          <rect x="30" y="26" width="5" height="24" rx="2.5" fill="#F0FFF8"/>
+          <rect x="30" y="26" width="22" height="5" rx="2.5" fill="#F0FFF8"/>
+          <rect x="30" y="36.5" width="16" height="4.5" rx="2.25" fill="#F0FFF8"/>
+          <rect x="30" y="45" width="22" height="5" rx="2.5" fill="#F0FFF8"/>
+          <circle cx="62" cy="20" r="5.5" fill="url(#tg2)"/>
+          <circle cx="62" cy="20" r="8.5" stroke="#10B981" stroke-width="1.2" fill="none" opacity="0.25"/>
+          <line x1="52" y1="26" x2="57.5" y2="23.5" stroke="#10B981" stroke-width="1.5" stroke-linecap="round" stroke-dasharray="2.5 2.5" opacity="0.5"/>
+          <circle cx="60" cy="44" r="3" fill="#10B981" opacity="0.4"/>
+        </svg>
+      </div>
+      <div class="logo-text-group">
+        <div class="logo-name" style="font-size:34px">
+          <span style="color:#F0FFF8">Emp</span><span class="axis">Axis</span>
+        </div>
+        <div class="logo-tagline" style="font-size:8.5px;color:rgba(16,185,129,0.4)">HR &nbsp;·&nbsp; People &nbsp;·&nbsp; Platform</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- GREEN -->
+  <div class="v-cell v-cell-green" style="border-left:1px solid rgba(0,0,0,0.08)">
+    <div class="logo">
+      <div class="logo-mark">
+        <svg width="72" height="72" viewBox="0 0 88 88" fill="none">
+          <circle cx="44" cy="44" r="40" stroke="rgba(255,255,255,0.3)" stroke-width="1.5" fill="none"/>
+          <path d="M 14 26 A 34 34 0 1 0 74 26" stroke="rgba(255,255,255,0.9)" stroke-width="5" stroke-linecap="round" fill="none"/>
+          <path d="M 21 30 A 26 26 0 1 0 67 30" stroke="white" stroke-width="1.5" stroke-linecap="round" fill="none" opacity="0.2"/>
+          <rect x="30" y="26" width="5"  height="24" rx="2.5" fill="white"/>
+          <rect x="30" y="26" width="22" height="5"  rx="2.5" fill="white"/>
+          <rect x="30" y="36.5" width="16" height="4.5" rx="2.25" fill="white"/>
+          <rect x="30" y="45" width="22" height="5"  rx="2.5" fill="white"/>
+          <circle cx="62" cy="20" r="5.5" fill="white"/>
+          <circle cx="62" cy="20" r="8.5" stroke="rgba(255,255,255,0.35)" stroke-width="1.2" fill="none"/>
+          <line x1="52" y1="26" x2="57.5" y2="23.5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-dasharray="2.5 2.5" opacity="0.6"/>
+          <circle cx="60" cy="44" r="3" fill="rgba(255,255,255,0.5)"/>
+        </svg>
+      </div>
+      <div class="logo-text-group">
+        <div class="logo-name" style="font-size:34px">
+          <span style="color:#fff">Emp</span><span style="color:#D1FAE5">Axis</span>
+        </div>
+        <div class="logo-tagline" style="font-size:8.5px;color:rgba(255,255,255,0.45)">HR &nbsp;·&nbsp; People &nbsp;·&nbsp; Platform</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+<!-- ══════════════════════════════════════════
+     ICON ONLY — ALL CONTEXTS
+══════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-label">Icon Mark — Standalone</div>
+  <div class="icon-strip">
+
+    <!-- Light -->
+    <div class="icon-item">
+      <svg width="80" height="80" viewBox="0 0 88 88" fill="none">
+        <defs>
+          <linearGradient id="ia1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#10B981"/><stop offset="100%" stop-color="#059669"/></linearGradient>
+          <linearGradient id="ib1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#34D399"/><stop offset="100%" stop-color="#10B981"/></linearGradient>
+        </defs>
+        <circle cx="44" cy="44" r="40" stroke="#10B981" stroke-width="1.5" fill="none" opacity="0.25"/>
+        <path d="M 14 26 A 34 34 0 1 0 74 26" stroke="url(#ia1)" stroke-width="5" stroke-linecap="round" fill="none"/>
+        <path d="M 21 30 A 26 26 0 1 0 67 30" stroke="#10B981" stroke-width="1.5" stroke-linecap="round" fill="none" opacity="0.18"/>
+        <rect x="30" y="26" width="5" height="24" rx="2.5" fill="#0D1117"/>
+        <rect x="30" y="26" width="22" height="5" rx="2.5" fill="#0D1117"/>
+        <rect x="30" y="36.5" width="16" height="4.5" rx="2.25" fill="#0D1117"/>
+        <rect x="30" y="45" width="22" height="5" rx="2.5" fill="#0D1117"/>
+        <circle cx="62" cy="20" r="5.5" fill="url(#ib1)"/>
+        <circle cx="62" cy="20" r="8.5" stroke="#10B981" stroke-width="1.2" fill="none" opacity="0.25"/>
+        <line x1="52" y1="26" x2="57.5" y2="23.5" stroke="#10B981" stroke-width="1.5" stroke-linecap="round" stroke-dasharray="2.5 2.5" opacity="0.55"/>
+        <circle cx="60" cy="44" r="3" fill="#10B981" opacity="0.45"/>
+      </svg>
+      <span>Light</span>
+    </div>
+
+    <!-- White card -->
+    <div class="icon-item">
+      <div style="background:#fff;border-radius:20px;padding:14px;box-shadow:0 4px 24px rgba(0,0,0,0.08)">
+        <svg width="64" height="64" viewBox="0 0 88 88" fill="none">
+          <defs>
+            <linearGradient id="ia2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#10B981"/><stop offset="100%" stop-color="#059669"/></linearGradient>
+            <linearGradient id="ib2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#34D399"/><stop offset="100%" stop-color="#10B981"/></linearGradient>
+          </defs>
+          <circle cx="44" cy="44" r="40" stroke="#10B981" stroke-width="1.5" fill="none" opacity="0.2"/>
+          <path d="M 14 26 A 34 34 0 1 0 74 26" stroke="url(#ia2)" stroke-width="5" stroke-linecap="round" fill="none"/>
+          <path d="M 21 30 A 26 26 0 1 0 67 30" stroke="#10B981" stroke-width="1.5" stroke-linecap="round" fill="none" opacity="0.15"/>
+          <rect x="30" y="26" width="5" height="24" rx="2.5" fill="#0D1117"/>
+          <rect x="30" y="26" width="22" height="5" rx="2.5" fill="#0D1117"/>
+          <rect x="30" y="36.5" width="16" height="4.5" rx="2.25" fill="#0D1117"/>
+          <rect x="30" y="45" width="22" height="5" rx="2.5" fill="#0D1117"/>
+          <circle cx="62" cy="20" r="5.5" fill="url(#ib2)"/>
+          <circle cx="62" cy="20" r="8.5" stroke="#10B981" stroke-width="1.2" fill="none" opacity="0.2"/>
+          <line x1="52" y1="26" x2="57.5" y2="23.5" stroke="#10B981" stroke-width="1.5" stroke-linecap="round" stroke-dasharray="2.5 2.5" opacity="0.5"/>
+          <circle cx="60" cy="44" r="3" fill="#10B981" opacity="0.4"/>
+        </svg>
+      </div>
+      <span>Card</span>
+    </div>
+
+    <!-- Dark -->
+    <div class="icon-item">
+      <div style="background:#0D1117;border-radius:20px;padding:14px">
+        <svg width="64" height="64" viewBox="0 0 88 88" fill="none">
+          <defs>
+            <linearGradient id="ia3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#34D399"/><stop offset="100%" stop-color="#059669"/></linearGradient>
+            <linearGradient id="ib3" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#6EE7B7"/><stop offset="100%" stop-color="#10B981"/></linearGradient>
+          </defs>
+          <circle cx="44" cy="44" r="40" stroke="#10B981" stroke-width="1.5" fill="none" opacity="0.12"/>
+          <path d="M 14 26 A 34 34 0 1 0 74 26" stroke="url(#ia3)" stroke-width="5" stroke-linecap="round" fill="none"/>
+          <path d="M 21 30 A 26 26 0 1 0 67 30" stroke="#10B981" stroke-width="1.5" stroke-linecap="round" fill="none" opacity="0.12"/>
+          <rect x="30" y="26" width="5" height="24" rx="2.5" fill="#F0FFF8"/>
+          <rect x="30" y="26" width="22" height="5" rx="2.5" fill="#F0FFF8"/>
+          <rect x="30" y="36.5" width="16" height="4.5" rx="2.25" fill="#F0FFF8"/>
+          <rect x="30" y="45" width="22" height="5" rx="2.5" fill="#F0FFF8"/>
+          <circle cx="62" cy="20" r="5.5" fill="url(#ib3)"/>
+          <circle cx="62" cy="20" r="8.5" stroke="#10B981" stroke-width="1.2" fill="none" opacity="0.2"/>
+          <line x1="52" y1="26" x2="57.5" y2="23.5" stroke="#34D399" stroke-width="1.5" stroke-linecap="round" stroke-dasharray="2.5 2.5" opacity="0.5"/>
+          <circle cx="60" cy="44" r="3" fill="#10B981" opacity="0.5"/>
+        </svg>
+      </div>
+      <span>Dark</span>
+    </div>
+
+    <!-- Brand green -->
+    <div class="icon-item">
+      <div style="background:linear-gradient(135deg,#10B981,#059669);border-radius:20px;padding:14px">
+        <svg width="64" height="64" viewBox="0 0 88 88" fill="none">
+          <circle cx="44" cy="44" r="40" stroke="rgba(255,255,255,0.3)" stroke-width="1.5" fill="none"/>
+          <path d="M 14 26 A 34 34 0 1 0 74 26" stroke="rgba(255,255,255,0.95)" stroke-width="5" stroke-linecap="round" fill="none"/>
+          <path d="M 21 30 A 26 26 0 1 0 67 30" stroke="white" stroke-width="1.5" stroke-linecap="round" fill="none" opacity="0.2"/>
+          <rect x="30" y="26" width="5" height="24" rx="2.5" fill="white"/>
+          <rect x="30" y="26" width="22" height="5" rx="2.5" fill="white"/>
+          <rect x="30" y="36.5" width="16" height="4.5" rx="2.25" fill="white"/>
+          <rect x="30" y="45" width="22" height="5" rx="2.5" fill="white"/>
+          <circle cx="62" cy="20" r="5.5" fill="white"/>
+          <circle cx="62" cy="20" r="8.5" stroke="rgba(255,255,255,0.35)" stroke-width="1.2" fill="none"/>
+          <line x1="52" y1="26" x2="57.5" y2="23.5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-dasharray="2.5 2.5" opacity="0.6"/>
+          <circle cx="60" cy="44" r="3" fill="rgba(255,255,255,0.6)"/>
+        </svg>
+      </div>
+      <span>Brand</span>
+    </div>
+
+    <!-- Glass / frosted -->
+    <div class="icon-item">
+      <div style="background:linear-gradient(135deg,rgba(16,185,129,0.12),rgba(5,150,105,0.06));border-radius:20px;padding:14px;border:1px solid rgba(16,185,129,0.2);backdrop-filter:blur(12px)">
+        <svg width="64" height="64" viewBox="0 0 88 88" fill="none">
+          <defs>
+            <linearGradient id="ia5" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#10B981"/><stop offset="100%" stop-color="#059669"/></linearGradient>
+            <linearGradient id="ib5" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#34D399"/><stop offset="100%" stop-color="#10B981"/></linearGradient>
+          </defs>
+          <circle cx="44" cy="44" r="40" stroke="#10B981" stroke-width="1.5" fill="rgba(16,185,129,0.05)"/>
+          <path d="M 14 26 A 34 34 0 1 0 74 26" stroke="url(#ia5)" stroke-width="5" stroke-linecap="round" fill="none"/>
+          <rect x="30" y="26" width="5" height="24" rx="2.5" fill="#0D1117"/>
+          <rect x="30" y="26" width="22" height="5" rx="2.5" fill="#0D1117"/>
+          <rect x="30" y="36.5" width="16" height="4.5" rx="2.25" fill="#0D1117"/>
+          <rect x="30" y="45" width="22" height="5" rx="2.5" fill="#0D1117"/>
+          <circle cx="62" cy="20" r="5.5" fill="url(#ib5)"/>
+          <circle cx="62" cy="20" r="8.5" stroke="#10B981" stroke-width="1.2" fill="none" opacity="0.3"/>
+          <line x1="52" y1="26" x2="57.5" y2="23.5" stroke="#10B981" stroke-width="1.5" stroke-linecap="round" stroke-dasharray="2.5 2.5"/>
+          <circle cx="60" cy="44" r="3" fill="#10B981" opacity="0.5"/>
+        </svg>
+      </div>
+      <span>Glass</span>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+     SIZE SCALE
+══════════════════════════════════════════ -->
+<div class="section" style="background:#fff">
+  <div class="section-label">Scale</div>
+  <div class="sizes-row">
+
+    <div class="size-item">
+      <div class="size-tag">Hero · 88px</div>
+      <div class="logo" style="gap:0">
+        <svg width="88" height="88" viewBox="0 0 88 88" fill="none">
+          <defs><linearGradient id="sg1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#10B981"/><stop offset="100%" stop-color="#059669"/></linearGradient><linearGradient id="sg2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#34D399"/><stop offset="100%" stop-color="#10B981"/></linearGradient></defs>
+          <circle cx="44" cy="44" r="40" stroke="#10B981" stroke-width="1.5" fill="none" opacity="0.25"/>
+          <path d="M 14 26 A 34 34 0 1 0 74 26" stroke="url(#sg1)" stroke-width="5" stroke-linecap="round" fill="none"/>
+          <path d="M 21 30 A 26 26 0 1 0 67 30" stroke="#10B981" stroke-width="1.5" stroke-linecap="round" fill="none" opacity="0.18"/>
+          <rect x="30" y="26" width="5" height="24" rx="2.5" fill="#0D1117"/><rect x="30" y="26" width="22" height="5" rx="2.5" fill="#0D1117"/><rect x="30" y="36.5" width="16" height="4.5" rx="2.25" fill="#0D1117"/><rect x="30" y="45" width="22" height="5" rx="2.5" fill="#0D1117"/>
+          <circle cx="62" cy="20" r="5.5" fill="url(#sg2)"/><circle cx="62" cy="20" r="8.5" stroke="#10B981" stroke-width="1.2" fill="none" opacity="0.25"/>
+          <line x1="52" y1="26" x2="57.5" y2="23.5" stroke="#10B981" stroke-width="1.5" stroke-linecap="round" stroke-dasharray="2.5 2.5" opacity="0.55"/>
+          <circle cx="60" cy="44" r="3" fill="#10B981" opacity="0.45"/>
+        </svg>
+        <div class="logo-text-group" style="margin-left:18px">
+          <div class="logo-name" style="font-size:40px"><span class="emp">Emp</span><span class="axis">Axis</span></div>
+          <div class="logo-tagline" style="font-size:9px">HR &nbsp;·&nbsp; People &nbsp;·&nbsp; Platform</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="width:1px;height:60px;background:#E2E8E0;flex-shrink:0"></div>
+
+    <div class="size-item">
+      <div class="size-tag">Nav · 52px</div>
+      <div class="logo" style="gap:0">
+        <svg width="52" height="52" viewBox="0 0 88 88" fill="none">
+          <defs><linearGradient id="nm1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#10B981"/><stop offset="100%" stop-color="#059669"/></linearGradient><linearGradient id="nm2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#34D399"/><stop offset="100%" stop-color="#10B981"/></linearGradient></defs>
+          <circle cx="44" cy="44" r="40" stroke="#10B981" stroke-width="1.5" fill="none" opacity="0.25"/>
+          <path d="M 14 26 A 34 34 0 1 0 74 26" stroke="url(#nm1)" stroke-width="5" stroke-linecap="round" fill="none"/>
+          <rect x="30" y="26" width="5" height="24" rx="2.5" fill="#0D1117"/><rect x="30" y="26" width="22" height="5" rx="2.5" fill="#0D1117"/><rect x="30" y="36.5" width="16" height="4.5" rx="2.25" fill="#0D1117"/><rect x="30" y="45" width="22" height="5" rx="2.5" fill="#0D1117"/>
+          <circle cx="62" cy="20" r="5.5" fill="url(#nm2)"/>
+          <line x1="52" y1="26" x2="57.5" y2="23.5" stroke="#10B981" stroke-width="1.5" stroke-linecap="round" stroke-dasharray="2.5 2.5" opacity="0.55"/>
+        </svg>
+        <div class="logo-text-group" style="margin-left:12px">
+          <div class="logo-name" style="font-size:24px"><span class="emp">Emp</span><span class="axis">Axis</span></div>
+          <div class="logo-tagline" style="font-size:7.5px">HR &nbsp;·&nbsp; People &nbsp;·&nbsp; Platform</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="width:1px;height:60px;background:#E2E8E0;flex-shrink:0"></div>
+
+    <div class="size-item">
+      <div class="size-tag">Sidebar · 32px</div>
+      <div class="logo" style="gap:0">
+        <svg width="32" height="32" viewBox="0 0 88 88" fill="none">
+          <defs><linearGradient id="sb1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#10B981"/><stop offset="100%" stop-color="#059669"/></linearGradient><linearGradient id="sb2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#34D399"/><stop offset="100%" stop-color="#10B981"/></linearGradient></defs>
+          <path d="M 14 26 A 34 34 0 1 0 74 26" stroke="url(#sb1)" stroke-width="6" stroke-linecap="round" fill="none"/>
+          <rect x="30" y="26" width="5" height="24" rx="2.5" fill="#0D1117"/><rect x="30" y="26" width="22" height="5" rx="2.5" fill="#0D1117"/><rect x="30" y="36.5" width="16" height="4.5" rx="2.25" fill="#0D1117"/><rect x="30" y="45" width="22" height="5" rx="2.5" fill="#0D1117"/>
+          <circle cx="62" cy="20" r="6" fill="url(#sb2)"/>
+        </svg>
+        <div class="logo-text-group" style="margin-left:8px">
+          <div class="logo-name" style="font-size:15px"><span class="emp">Emp</span><span class="axis">Axis</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+     FAVICON / APP ICON
+══════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-label">Favicon &amp; App Icon</div>
+  <div class="fav-row">
+
+    <div class="fav-item">
+      <div style="background:linear-gradient(135deg,#10B981,#059669);border-radius:24px;width:96px;height:96px;display:flex;align-items:center;justify-content:center">
+        <svg width="64" height="64" viewBox="0 0 88 88" fill="none">
+          <defs><linearGradient id="fv1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="rgba(255,255,255,0.9)"/><stop offset="100%" stop-color="rgba(255,255,255,0.7)"/></linearGradient></defs>
+          <circle cx="44" cy="44" r="40" stroke="rgba(255,255,255,0.25)" stroke-width="1.5" fill="none"/>
+          <path d="M 14 26 A 34 34 0 1 0 74 26" stroke="white" stroke-width="6" stroke-linecap="round" fill="none"/>
+          <rect x="30" y="26" width="5" height="24" rx="2.5" fill="white"/><rect x="30" y="26" width="22" height="5" rx="2.5" fill="white"/><rect x="30" y="36.5" width="16" height="4.5" rx="2.25" fill="white"/><rect x="30" y="45" width="22" height="5" rx="2.5" fill="white"/>
+          <circle cx="62" cy="20" r="6" fill="url(#fv1)"/>
+          <circle cx="62" cy="20" r="9.5" stroke="rgba(255,255,255,0.3)" stroke-width="1.2" fill="none"/>
+          <line x1="52" y1="26" x2="57.5" y2="23.5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-dasharray="2.5 2.5" opacity="0.6"/>
+        </svg>
+      </div>
+      <span>iOS · 96px</span>
+    </div>
+
+    <div class="fav-item">
+      <div style="background:#0D1117;border-radius:18px;width:72px;height:72px;display:flex;align-items:center;justify-content:center">
+        <svg width="48" height="48" viewBox="0 0 88 88" fill="none">
+          <defs><linearGradient id="fv2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#34D399"/><stop offset="100%" stop-color="#059669"/></linearGradient><linearGradient id="fv3" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#6EE7B7"/><stop offset="100%" stop-color="#10B981"/></linearGradient></defs>
+          <path d="M 14 26 A 34 34 0 1 0 74 26" stroke="url(#fv2)" stroke-width="6" stroke-linecap="round" fill="none"/>
+          <rect x="30" y="26" width="5" height="24" rx="2.5" fill="#F0FFF8"/><rect x="30" y="26" width="22" height="5" rx="2.5" fill="#F0FFF8"/><rect x="30" y="36.5" width="16" height="4.5" rx="2.25" fill="#F0FFF8"/><rect x="30" y="45" width="22" height="5" rx="2.5" fill="#F0FFF8"/>
+          <circle cx="62" cy="20" r="6" fill="url(#fv3)"/>
+        </svg>
+      </div>
+      <span>Android · 72px</span>
+    </div>
+
+    <div class="fav-item">
+      <div style="background:#fff;border:1px solid #E2E8E0;border-radius:10px;width:48px;height:48px;display:flex;align-items:center;justify-content:center">
+        <svg width="32" height="32" viewBox="0 0 88 88" fill="none">
+          <defs><linearGradient id="fv4" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#10B981"/><stop offset="100%" stop-color="#059669"/></linearGradient><linearGradient id="fv5" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#34D399"/><stop offset="100%" stop-color="#10B981"/></linearGradient></defs>
+          <path d="M 14 26 A 34 34 0 1 0 74 26" stroke="url(#fv4)" stroke-width="7" stroke-linecap="round" fill="none"/>
+          <rect x="30" y="26" width="5" height="24" rx="2.5" fill="#0D1117"/><rect x="30" y="26" width="22" height="5" rx="2.5" fill="#0D1117"/><rect x="30" y="36.5" width="16" height="4.5" rx="2.25" fill="#0D1117"/><rect x="30" y="45" width="22" height="5" rx="2.5" fill="#0D1117"/>
+          <circle cx="62" cy="20" r="6.5" fill="url(#fv5)"/>
+        </svg>
+      </div>
+      <span>Tab · 48px</span>
+    </div>
+
+    <div class="fav-item">
+      <div style="background:#fff;border:1px solid #E2E8E0;border-radius:5px;width:32px;height:32px;display:flex;align-items:center;justify-content:center">
+        <svg width="22" height="22" viewBox="0 0 88 88" fill="none">
+          <defs><linearGradient id="fv6" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#10B981"/><stop offset="100%" stop-color="#059669"/></linearGradient></defs>
+          <path d="M 14 26 A 34 34 0 1 0 74 26" stroke="url(#fv6)" stroke-width="8" stroke-linecap="round" fill="none"/>
+          <rect x="30" y="26" width="5" height="24" rx="2.5" fill="#0D1117"/><rect x="30" y="26" width="22" height="5" rx="2.5" fill="#0D1117"/><rect x="30" y="36.5" width="16" height="4.5" rx="2.25" fill="#0D1117"/><rect x="30" y="45" width="22" height="5" rx="2.5" fill="#0D1117"/>
+          <circle cx="62" cy="20" r="7" fill="#10B981"/>
+        </svg>
+      </div>
+      <span>Favicon · 32px</span>
+    </div>
+
+    <div class="fav-item">
+      <div style="background:#fff;border:1px solid #E2E8E0;border-radius:3px;width:20px;height:20px;display:flex;align-items:center;justify-content:center">
+        <svg width="14" height="14" viewBox="0 0 88 88" fill="none">
+          <defs><linearGradient id="fv7" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#10B981"/><stop offset="100%" stop-color="#059669"/></linearGradient></defs>
+          <path d="M 10 24 A 36 36 0 1 0 78 24" stroke="url(#fv7)" stroke-width="10" stroke-linecap="round" fill="none"/>
+          <rect x="28" y="26" width="7" height="24" rx="3" fill="#0D1117"/><rect x="28" y="26" width="24" height="7" rx="3" fill="#0D1117"/><rect x="28" y="38" width="16" height="6" rx="3" fill="#0D1117"/><rect x="28" y="45" width="24" height="7" rx="3" fill="#0D1117"/>
+          <circle cx="62" cy="18" r="9" fill="#10B981"/>
+        </svg>
+      </div>
+      <span>Micro · 16px</span>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+     COLOUR PALETTE
+══════════════════════════════════════════ -->
+<div class="section" style="background:#fff">
+  <div class="section-label">Colour System</div>
+  <div class="palette">
+    <div class="swatch" style="background:#10B981;color:white"><div class="swatch-name">Primary</div><div class="swatch-hex">#10B981</div></div>
+    <div class="swatch" style="background:#059669;color:white"><div class="swatch-name">Primary Dark</div><div class="swatch-hex">#059669</div></div>
+    <div class="swatch" style="background:#34D399;color:#065F46"><div class="swatch-name">Emerald</div><div class="swatch-hex">#34D399</div></div>
+    <div class="swatch" style="background:#D1FAE5;color:#065F46"><div class="swatch-name">Primary Light</div><div class="swatch-hex">#D1FAE5</div></div>
+    <div class="swatch" style="background:#0D1117;color:white"><div class="swatch-name">Ink</div><div class="swatch-hex">#0D1117</div></div>
+    <div class="swatch" style="background:#F5F7F2;color:#9BA89A;border:1px solid #E2E8E0"><div class="swatch-name">Surface</div><div class="swatch-hex">#F5F7F2</div></div>
+  </div>
+</div>
+
+</body>
+</html>
