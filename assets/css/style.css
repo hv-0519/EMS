@@ -2766,11 +2766,6 @@ textarea.form-control {
   color: #fff;
 }
 
-.btn-primary:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 6px 20px rgba(255, 107, 107, .4);
-}
-
 .btn-secondary {
   background: var(--secondary);
   color: var(--text-mid);

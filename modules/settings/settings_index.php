@@ -232,8 +232,7 @@ $smtpDebugLogMTime  = ($smtpDebugLogPath && is_file($smtpDebugLogPath)) ? @filem
   </div>
 </div>
 
-<!-- SMTP Configuration — admin only -->
-<?php if (hasRole('admin')): ?>
+<!-- SMTP Configuration -->
 <div class="card mt-24">
   <div class="card-header">
     <h2><i class="fas fa-envelope" style="color:var(--info);margin-right:8px"></i>SMTP Email Configuration</h2>
@@ -246,9 +245,9 @@ $smtpDebugLogMTime  = ($smtpDebugLogPath && is_file($smtpDebugLogPath)) ? @filem
       <div style="font-size:12px;font-weight:700;color:var(--text-light);text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px">Quick Provider Fill</div>
       <div style="display:flex;gap:8px;flex-wrap:wrap">
         <button type="button" class="btn btn-outline btn-sm" onclick="fillProvider('gmail')"><img src="https://www.google.com/favicon.ico" style="width:14px;height:14px;margin-right:5px">Gmail</button>
-        <button type="button" class="btn btn-outline btn-sm" onclick="fillProvider('outlook')"><img src="https://outlook.live.com/favicon.ico" alt="Outlook" style="width:14px;height:14px;margin-right:5px">Outlook</button>
-        <button type="button" class="btn btn-outline btn-sm" onclick="fillProvider('yahoo')"><img src="https://www.yahoo.com/favicon.ico" alt="Yahoo" style="width:14px;height:14px;margin-right:5px">Yahoo</button>
-        <button type="button" class="btn btn-outline btn-sm" onclick="fillProvider('ses')"><img src="https://aws.amazon.com/favicon.ico" alt="AWS" style="width:14px;height:14px;margin-right:5px">AWS SES</button>
+        <button type="button" class="btn btn-outline btn-sm" onclick="fillProvider('outlook')"><i class="fas fa-envelope" style="color:#0078D4;margin-right:5px"></i>Outlook</button>
+        <button type="button" class="btn btn-outline btn-sm" onclick="fillProvider('yahoo')"><i class="fas fa-envelope" style="color:#720E9E;margin-right:5px"></i>Yahoo</button>
+        <button type="button" class="btn btn-outline btn-sm" onclick="fillProvider('ses')"><i class="fas fa-aws" style="color:#FF9900;margin-right:5px"></i>AWS SES</button>
         <button type="button" class="btn btn-outline btn-sm" onclick="fillProvider('custom')"><i class="fas fa-server" style="margin-right:5px"></i>Custom</button>
       </div>
     </div>
@@ -296,7 +295,7 @@ $smtpDebugLogMTime  = ($smtpDebugLogPath && is_file($smtpDebugLogPath)) ? @filem
           <label>Test Email (optional)</label>
           <div style="display:flex;gap:8px">
             <input type="email" id="testEmailAddr" class="form-control" placeholder="send test to…">
-            <button type="button" class="btn-outline btn-sm" onclick="sendTest()" style="white-space:nowrap"><i class="fas fa-paper-plane"></i> Send Test</button>
+            <button type="button" class="btn btn-outline btn-sm" onclick="sendTest()" style="white-space:nowrap"><i class="fas fa-paper-plane"></i> Send Test</button>
           </div>
         </div>
       </div>
@@ -317,22 +316,8 @@ $smtpDebugLogMTime  = ($smtpDebugLogPath && is_file($smtpDebugLogPath)) ? @filem
     </form>
   </div>
 </div>
-<?php endif; ?>
 
-<?php if (hasRole('hr')): ?>
-<div class="card mt-24">
-  <div class="card-body" style="display:flex;align-items:center;gap:14px;padding:20px 24px">
-    <i class="fas fa-lock" style="font-size:22px;color:var(--text-light)"></i>
-    <div>
-      <div style="font-weight:600;font-size:14px;color:var(--text-dark)">SMTP Email Configuration</div>
-      <div style="font-size:13px;color:var(--text-light);margin-top:2px">This section is restricted to administrators. Contact your admin to update email settings.</div>
-    </div>
-  </div>
-</div>
-<?php endif; ?>
-
-<!-- ═══ SMTP Setup Guide Modal — admin only ═══ -->
-<?php if (hasRole('admin')): ?>
+<!-- ═══ SMTP Setup Guide Modal ═══ -->
 <div id="smtpGuideModal" class="modal-overlay">
   <div class="modal-dialog modal-dialog-lg">
     <div class="modal-header">
@@ -461,7 +446,6 @@ $smtpDebugLogMTime  = ($smtpDebugLogPath && is_file($smtpDebugLogPath)) ? @filem
     </div>
   </div>
 </div>
-<?php endif; ?>
 
 <script>
 const smtpProviders = {

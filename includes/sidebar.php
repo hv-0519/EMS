@@ -53,9 +53,11 @@ $isProfilePage = str_contains(str_replace('\\', '/', $scriptPath), '/modules/emp
     <?php endif; ?>
 
     <div class="nav-section-label">System</div>
+    <?php if ($role !== 'employee'): ?>
     <a href="<?= APP_URL ?>/modules/reports/index.php" class="nav-item <?= $currentPage==='reports'?'active':'' ?>">
       <span class="nav-icon"><i class="fas fa-chart-bar"></i></span><span class="nav-text">Reports</span>
     </a>
+    <?php endif; ?>
     <?php if ($role !== 'employee'): ?>
     <a href="<?= APP_URL ?>/modules/activity/index.php" class="nav-item <?= $currentPage==='activity'?'active':'' ?>">
       <span class="nav-icon"><i class="fas fa-history"></i></span><span class="nav-text">Activity Log</span>
@@ -68,7 +70,7 @@ $isProfilePage = str_contains(str_replace('\\', '/', $scriptPath), '/modules/emp
     <a href="<?= APP_URL ?>/modules/announcements/index.php" class="nav-item <?= $currentPage==='announcements'?'active':'' ?>">
       <span class="nav-icon"><i class="fas fa-bullhorn"></i></span><span class="nav-text">Announcements</span>
     </a>
-    <?php if ($role === 'admin'): ?>
+    <?php if ($role !== 'employee'): ?>
     <a href="<?= APP_URL ?>/modules/settings/index.php" class="nav-item <?= $currentPage==='settings'?'active':'' ?>">
       <span class="nav-icon"><i class="fas fa-cog"></i></span><span class="nav-text">Settings</span>
     </a>

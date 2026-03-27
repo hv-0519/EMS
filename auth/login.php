@@ -12,30 +12,37 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!$li || !$pw) {
         $loginError = 'Please enter your username/email and password.';
     } else {
-        $s = $pdo->prepare('SELECT u.*,e.name AS emp_name,e.photo AS emp_photo FROM users u LEFT JOIN employees e ON e.user_id=u.id WHERE (u.email=? OR u.username=?) AND u.is_verified=1 LIMIT 1');
-        $s->execute([$li, $li]);
-        $user = $s->fetch();
-
-        if ($user && password_verify($pw, $user['password'])) {
-            if (empty($user['display_name'])) {
-                $user['display_name'] = $user['emp_name'] ?: $user['username'];
-            }
-            try {
-                $pdo->prepare('UPDATE users SET last_login_at=NOW(),last_login_ip=? WHERE id=?')
-                    ->execute([$_SERVER['REMOTE_ADDR'] ?? '0.0.0.0', $user['id']]);
-            } catch (\Throwable $e) {}
-
-            loginUser($user);
-            logActivity('Logged in', 'User signed in', 'auth');
-
-            // Force password change on first login
-            if (!empty($user['must_change_password'])) {
-                redirect(APP_URL . '/auth/change-password.php');
-            }
-            redirect(APP_URL . '/dashboard/dashboard.php');
+        $lockoutSecs = loginLockoutSeconds($li);
+        if ($lockoutSecs > 0) {
+            $mins = (int)ceil($lockoutSecs / 60);
+            $loginError = "Too many failed attempts. Please wait {$mins} minute(s) before trying again.";
         } else {
-            $loginError = 'Invalid username or password. Please try again.';
-            logActivity('Failed login attempt', "Failed login for: $li", 'auth');
+            $s = $pdo->prepare('SELECT u.*,e.name AS emp_name,e.photo AS emp_photo FROM users u LEFT JOIN employees e ON e.user_id=u.id WHERE (u.email=? OR u.username=?) AND u.is_verified=1 LIMIT 1');
+            $s->execute([$li, $li]);
+            $user = $s->fetch();
+
+            if ($user && password_verify($pw, $user['password'])) {
+                clearLoginAttempts($li);
+                if (empty($user['display_name'])) {
+                    $user['display_name'] = $user['emp_name'] ?: $user['username'];
+                }
+                try {
+                    $pdo->prepare('UPDATE users SET last_login_at=NOW(),last_login_ip=? WHERE id=?')
+                        ->execute([$_SERVER['REMOTE_ADDR'] ?? '0.0.0.0', $user['id']]);
+                } catch (\Throwable $e) {}
+
+                loginUser($user);
+                logActivity('Logged in', 'User signed in', 'auth');
+
+                if (!empty($user['must_change_password'])) {
+                    redirect(APP_URL . '/auth/change-password.php');
+                }
+                redirect(APP_URL . '/dashboard/dashboard.php');
+            } else {
+                recordFailedLogin($li);
+                $loginError = 'Invalid username or password. Please try again.';
+                logActivity('Failed login attempt', "Failed login for: $li", 'auth');
+            }
         }
     }
 }
@@ -106,7 +113,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           <div class="ea-finput">
             <i class="fas fa-user ea-ficon"></i>
             <input type="text" name="login" class="ea-input" required autocomplete="username"
-              value="<?= htmlspecialchars($_POST['login'] ?? '') ?>" placeholder="john.doe or john@company.com">
+              value="<?= htmlspecialchars($_POST['login'] ?? '') ?>" placeholder="emp48372 or john.doe@company.com">
           </div>
         </div>
         <div class="ea-fgroup">
@@ -130,7 +137,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="ea-demo-row">
           <button class="ea-demo-chip" data-u="admin"      data-p="password"><i class="fas fa-crown"></i> Admin</button>
           <button class="ea-demo-chip" data-u="hrmanager"  data-p="password"><i class="fas fa-user-tie"></i> HR</button>
-          <button class="ea-demo-chip" data-u="john.doe"   data-p="password"><i class="fas fa-user"></i> Employee</button>
+          <button class="ea-demo-chip" data-u="emp48372"   data-p="password"><i class="fas fa-user"></i> Employee</button>
         </div>
         <div style="font-size:11px;color:var(--text-light);text-align:center;margin-top:6px">
           Password for all demo accounts: <code style="background:var(--secondary);padding:1px 5px;border-radius:4px">password</code>

@@ -24,8 +24,8 @@ foreach ($rows as $r) {
     fputcsv($out, [
         $r['employee_id'], $r['name'], $r['department_name'] ?? '',
         $r['date'],
-        $r['check_in'] ? date('h:i A', strtotime($r['check_in'])) : '',
-        $r['check_out'] ? date('h:i A', strtotime($r['check_out'])) : '',
+        $r['check_in']  ? formatStoredUtcToApp($r['check_in'],  'h:i A') : '',
+        $r['check_out'] ? formatStoredUtcToApp($r['check_out'], 'h:i A') : '',
         $r['status']
     ]);
 }

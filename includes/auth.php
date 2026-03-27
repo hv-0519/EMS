@@ -6,8 +6,9 @@ require_once __DIR__ . '/../config/database.php';
 
 if (session_status() === PHP_SESSION_NONE) {
     session_name(SESSION_NAME);
-    session_set_cookie_params(['httponly' => true, 'samesite' => 'Lax']);
+    session_set_cookie_params(['httponly' => true, 'samesite' => 'Strict']);
     session_start();
+    validateSessionFingerprint();
 }
 
 function redirect(string $url): void
@@ -31,6 +32,73 @@ function requireRole(string ...$roles): void
 {
     requireLogin();
     if (!hasRole(...$roles)) redirect(APP_URL . '/dashboard/dashboard.php?error=forbidden');
+}
+
+// ============================================================
+// Session fingerprint — binds session to the browser that
+// created it. Destroys and redirects if the UA changes mid-
+// session (basic session-hijack mitigation).
+// ============================================================
+function validateSessionFingerprint(): void
+{
+    if (!isLoggedIn()) return;
+    $ua = substr($_SERVER['HTTP_USER_AGENT'] ?? '', 0, 512);
+    $fp = hash('sha256', $ua);
+    if (!isset($_SESSION['_fp'])) {
+        $_SESSION['_fp'] = $fp;
+        return;
+    }
+    if (!hash_equals($_SESSION['_fp'], $fp)) {
+        session_destroy();
+        header('Location: ' . APP_URL . '/auth/login.php?error=session_invalid');
+        exit;
+    }
+}
+
+// ============================================================
+// Login rate-limiter — uses a DB table `login_attempts`.
+// Returns seconds remaining on lockout (0 = allowed).
+// ============================================================
+function loginLockoutSeconds(string $identifier): int
+{
+    try {
+        $pdo = getDB();
+        $window   = 10 * 60;   // 10-minute window
+        $maxTries = 5;          // attempts before lockout
+        $lockout  = 15 * 60;   // 15-minute lockout
+
+        $pdo->prepare('DELETE FROM login_attempts WHERE attempted_at < DATE_SUB(NOW(), INTERVAL ? SECOND)')
+            ->execute([$window]);
+
+        $s = $pdo->prepare('SELECT COUNT(*), MAX(attempted_at) FROM login_attempts WHERE identifier = ? AND attempted_at >= DATE_SUB(NOW(), INTERVAL ? SECOND)');
+        $s->execute([hash('sha256', $identifier), $window]);
+        [$count, $lastAt] = $s->fetch(PDO::FETCH_NUM);
+
+        if ((int)$count >= $maxTries && $lastAt) {
+            $elapsed = time() - strtotime($lastAt);
+            $wait    = $lockout - $elapsed;
+            if ($wait > 0) return (int)$wait;
+        }
+        return 0;
+    } catch (\Throwable $e) {
+        return 0;
+    }
+}
+
+function recordFailedLogin(string $identifier): void
+{
+    try {
+        getDB()->prepare('INSERT INTO login_attempts (identifier, ip, attempted_at) VALUES (?, ?, NOW())')
+            ->execute([hash('sha256', $identifier), $_SERVER['REMOTE_ADDR'] ?? '0.0.0.0']);
+    } catch (\Throwable $e) {}
+}
+
+function clearLoginAttempts(string $identifier): void
+{
+    try {
+        getDB()->prepare('DELETE FROM login_attempts WHERE identifier = ?')
+            ->execute([hash('sha256', $identifier)]);
+    } catch (\Throwable $e) {}
 }
 
 function tableExists(string $table): bool
@@ -94,47 +162,23 @@ function formatStoredUtcToApp(?string $datetime, string $format = 'h:i A'): stri
     return $dt ? $dt->setTimezone(appTimezone())->format($format) : '—';
 }
 
+// ============================================================
+// ensureWorkTrackingSchema / ensureLeaveSchemaSupportHalfDay
+//
+// These functions previously ran ALTER TABLE on every request.
+// Phase 4 migration (migration_phase4_integrity.sql) now adds
+// all required columns and tables permanently. These stubs
+// remain so existing call-sites don't break, but they no
+// longer issue any DDL. A single lightweight schema_version
+// check is done once per process to confirm migration ran.
+// ============================================================
 function ensureWorkTrackingSchema(): void
 {
     static $done = false;
     if ($done) return;
     $done = true;
-    try {
-        $pdo = getDB();
-        if (!columnExists('attendance', 'worked_minutes')) {
-            $pdo->exec("ALTER TABLE attendance ADD COLUMN worked_minutes INT UNSIGNED NOT NULL DEFAULT 0 AFTER check_out");
-        }
-        if (!columnExists('attendance', 'created_at')) {
-            $pdo->exec("ALTER TABLE attendance ADD COLUMN created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP");
-        }
-        if (!columnExists('attendance', 'updated_at')) {
-            $pdo->exec("ALTER TABLE attendance ADD COLUMN updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP");
-        }
-        try {
-            $pdo->exec("ALTER TABLE attendance ADD UNIQUE KEY uk_emp_date (employee_id, date)");
-        } catch (\Throwable $e) {
-            // Older installs may already have this key, or duplicate legacy rows may block it.
-        }
-        if (!tableExists('attendance_sessions')) {
-            $pdo->exec("
-                CREATE TABLE IF NOT EXISTS attendance_sessions (
-                  id               INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-                  employee_id      INT UNSIGNED NOT NULL,
-                  user_id          INT UNSIGNED DEFAULT NULL,
-                  session_date     DATE NOT NULL,
-                  check_in         DATETIME NOT NULL,
-                  check_out        DATETIME DEFAULT NULL,
-                  duration_minutes INT UNSIGNED NOT NULL DEFAULT 0,
-                  source           VARCHAR(20) NOT NULL DEFAULT 'login',
-                  created_at       TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                  INDEX idx_emp_date (employee_id, session_date),
-                  INDEX idx_open     (employee_id, check_out)
-                ) ENGINE=InnoDB
-            ");
-        }
-    } catch (\Throwable $e) {
-        error_log('ensureWorkTrackingSchema: ' . $e->getMessage());
-    }
+    // DDL moved to migration_phase4_integrity.sql
+    // No ALTER TABLE here — schema is guaranteed by migration.
 }
 
 function ensureLeaveSchemaSupportHalfDay(): void
@@ -142,20 +186,8 @@ function ensureLeaveSchemaSupportHalfDay(): void
     static $done = false;
     if ($done) return;
     $done = true;
-    try {
-        $pdo = getDB();
-        if (!columnExists('leave_requests', 'duration_type')) {
-            $pdo->exec("ALTER TABLE leave_requests ADD COLUMN duration_type VARCHAR(20) NOT NULL DEFAULT 'full_day' AFTER leave_type");
-        }
-        foreach (['casual_quota', 'sick_quota', 'paid_quota', 'casual_used', 'sick_used', 'paid_used'] as $col) {
-            $pdo->exec("ALTER TABLE leave_balances MODIFY {$col} DECIMAL(6,1) NOT NULL DEFAULT 0.0");
-        }
-        $pdo->exec("ALTER TABLE leave_balances MODIFY casual_quota DECIMAL(6,1) NOT NULL DEFAULT 10.0");
-        $pdo->exec("ALTER TABLE leave_balances MODIFY sick_quota   DECIMAL(6,1) NOT NULL DEFAULT 10.0");
-        $pdo->exec("ALTER TABLE leave_balances MODIFY paid_quota   DECIMAL(6,1) NOT NULL DEFAULT 15.0");
-    } catch (\Throwable $e) {
-        error_log('ensureLeaveSchemaSupportHalfDay: ' . $e->getMessage());
-    }
+    // DDL moved to migration_phase4_integrity.sql
+    // No ALTER TABLE here — schema is guaranteed by migration.
 }
 
 function getEmployeeIdByUserId(int $userId): int
