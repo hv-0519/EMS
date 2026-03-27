@@ -272,7 +272,7 @@ require_once __DIR__ . '/../../includes/header.php';
     <?php endif; ?>
   </div>
   <?php else: ?>
-  <div class="data-table-wrap">
+  <div class="data-table-wrap table-responsive">
     <table class="data-table">
       <thead>
         <tr>

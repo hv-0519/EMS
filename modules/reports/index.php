@@ -291,7 +291,7 @@ $totalLate    = array_sum(array_column($attRows,'late_days'));
 <!-- Attendance Table -->
 <div class="card">
   <div class="card-header"><h2>Employee Attendance Summary</h2></div>
-  <div class="data-table-wrap">
+  <div class="data-table-wrap table-responsive">
     <table class="data-table">
       <thead>
         <tr>
@@ -368,7 +368,7 @@ $totalLate    = array_sum(array_column($attRows,'late_days'));
 
 <div class="card">
   <div class="card-header"><h2>Payroll Details — <?= date('F Y', strtotime($payMonth.'-01')) ?></h2></div>
-  <div class="data-table-wrap">
+  <div class="data-table-wrap table-responsive">
     <table class="data-table">
       <thead><tr><th>Employee</th><th>Department</th><th>Basic</th><th>Bonus</th><th>Deductions</th><th>Net Salary</th><th>Payment Date</th></tr></thead>
       <tbody>
@@ -438,7 +438,7 @@ $totalLate    = array_sum(array_column($attRows,'late_days'));
 <!-- Dept Leave Table -->
 <div class="card" style="margin-bottom:20px">
   <div class="card-header"><h2>Leave by Department</h2></div>
-  <div class="data-table-wrap">
+  <div class="data-table-wrap table-responsive">
     <table class="data-table">
       <thead><tr><th>Department</th><th>Total Requests</th><th>Total Days Approved</th></tr></thead>
       <tbody>
@@ -457,7 +457,7 @@ $totalLate    = array_sum(array_column($attRows,'late_days'));
 <!-- All Leave Records -->
 <div class="card">
   <div class="card-header"><h2>All Leave Requests — <?= $leaveYear ?></h2></div>
-  <div class="data-table-wrap">
+  <div class="data-table-wrap table-responsive">
     <table class="data-table">
       <thead><tr><th>Employee</th><th>Dept</th><th>Type</th><th>From</th><th>To</th><th>Days</th><th>Status</th></tr></thead>
       <tbody>

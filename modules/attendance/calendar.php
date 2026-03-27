@@ -58,14 +58,20 @@ if (!$selectedEmp) {
     redirect(APP_URL . '/modules/attendance/index.php');
 }
 
-$attStmt = $pdo->prepare('SELECT date,status FROM attendance WHERE employee_id=? AND YEAR(date)=?');
+$attStmt = $pdo->prepare('SELECT date, status, check_in, check_out FROM attendance WHERE employee_id=? AND YEAR(date)=?');
 $attStmt->execute([$selectedEmpId, $year]);
 $attendanceRows = $attStmt->fetchAll();
 
-$attendanceByDate = [];
+$attendanceData = [];
 foreach ($attendanceRows as $row) {
-    $attendanceByDate[$row['date']] = $row['status'];
+    $attendanceData[$row['date']] = [
+        'status'    => $row['status'],
+        'check_in'  => $row['check_in'],
+        'check_out' => $row['check_out']
+    ];
 }
+
+$today = date('Y-m-d');
 
 $publicHolidays = getPublicHolidays($year);
 $weekdays = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
@@ -131,11 +137,17 @@ require_once __DIR__ . '/../../includes/header.php';
         <?php
           $date = sprintf('%04d-%02d-%02d', $year, $monthNo, $day);
           $dow = (int)date('w', strtotime($date));
+          $checkIn = $checkOut = '';
+          $isToday = ($date === $today);
           $statusClass = 'absent';
           $statusText = 'Absent';
 
-          if (isset($attendanceByDate[$date])) {
-              $rawStatus = strtolower((string)$attendanceByDate[$date]);
+          if (isset($attendanceData[$date])) {
+              $row = $attendanceData[$date];
+              $rawStatus = strtolower((string)$row['status']);
+              $checkIn  = !empty($row['check_in']) ? date('H:i', strtotime($row['check_in'])) : '';
+              $checkOut = !empty($row['check_out']) ? date('H:i', strtotime($row['check_out'])) : '';
+
               if ($rawStatus === 'present') {
                   $statusClass = 'present';
                   $statusText = 'Present';
@@ -154,8 +166,14 @@ require_once __DIR__ . '/../../includes/header.php';
               $statusText = 'Weekend Holiday';
           }
         ?>
-        <div class="day-cell <?= $statusClass ?>" title="<?= htmlspecialchars($date . ' • ' . $statusText) ?>">
+        <div class="day-cell <?= $statusClass ?><?= $isToday ? ' today' : '' ?>" title="<?= htmlspecialchars($date . ' • ' . $statusText) ?>">
           <span class="day-num"><?= $day ?></span>
+          <?php if ($checkIn || $checkOut): ?>
+          <div class="day-times">
+            <?php if ($checkIn): ?><span><?= $checkIn ?></span><?php endif; ?>
+            <?php if ($checkOut): ?><span><?= $checkOut ?></span><?php endif; ?>
+          </div>
+          <?php endif; ?>
         </div>
         <?php endfor; ?>
       </div>

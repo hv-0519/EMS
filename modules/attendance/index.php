@@ -239,10 +239,12 @@ if ($calendarEmployeeId > 0) {
 }
 
 $calendarAttendanceByDate = [];
-// Also fetch worked_minutes per day for the calendar summary
 $calendarWorkedByDate = [];
 $calendarOpenSessionByDate = [];
+$calendarTimesByDate = [];
+
 if ($calendarEmployeeId > 0) {
+    // 1. Fetch attendance status and worked minutes
     $cStmt = $pdo->prepare('SELECT date, status, worked_minutes FROM attendance WHERE employee_id=? AND date>=? AND date<=?');
     $cStmt->execute([$calendarEmployeeId, $calendarStart, date('Y-m-t', $calendarTs)]);
     foreach ($cStmt->fetchAll() as $row) {
@@ -250,15 +252,25 @@ if ($calendarEmployeeId > 0) {
         $calendarWorkedByDate[$row['date']]     = (int)($row['worked_minutes'] ?? 0);
     }
 
-    $openStmt = $pdo->prepare('
-        SELECT session_date
+    // 2. Fetch first-in and last-out times from sessions
+    $tStmt = $pdo->prepare('
+        SELECT session_date, MIN(check_in) as first_in, MAX(check_out) as last_out,
+               COUNT(*) as sessions, SUM(CASE WHEN check_out IS NULL THEN 1 ELSE 0 END) as open_count
         FROM attendance_sessions
-        WHERE employee_id = ? AND session_date >= ? AND session_date <= ? AND check_out IS NULL
+        WHERE employee_id = ? AND session_date >= ? AND session_date <= ?
         GROUP BY session_date
     ');
-    $openStmt->execute([$calendarEmployeeId, $calendarStart, date('Y-m-t', $calendarTs)]);
-    foreach ($openStmt->fetchAll() as $row) {
-        $calendarOpenSessionByDate[(string)$row['session_date']] = true;
+    $tStmt->execute([$calendarEmployeeId, $calendarStart, date('Y-m-t', $calendarTs)]);
+    foreach ($tStmt->fetchAll() as $row) {
+        $date = (string)$row['session_date'];
+        $calendarTimesByDate[$date] = [
+            'first_in' => $row['first_in'] ? formatStoredUtcToApp($row['first_in']) : null,
+            'last_out' => ($row['last_out'] && $row['last_out'] !== '0000-00-00 00:00:00') ? formatStoredUtcToApp($row['last_out']) : null,
+            'is_open'  => (int)$row['open_count'] > 0
+        ];
+        if ((int)$row['open_count'] > 0) {
+            $calendarOpenSessionByDate[$date] = true;
+        }
     }
 }
 
@@ -1008,7 +1020,7 @@ $activeSessionStartMs = $activeSessionStartUnix > 0 ? $activeSessionStartUnix * 
     <span style="font-size:13px;color:var(--text-light)"><?= $total ?> records</span>
   </div>
 
-  <div class="data-table-wrap">
+  <div class="data-table-wrap table-responsive">
     <table class="data-table">
       <thead>
         <tr>
@@ -1080,7 +1092,7 @@ $activeSessionStartMs = $activeSessionStartUnix > 0 ? $activeSessionStartUnix * 
     <strong>Today's Session Details</strong>
     <span style="font-size:13px;color:var(--text-light)"><?= count($todaySessions) ?> sessions</span>
   </div>
-  <div class="data-table-wrap">
+  <div class="data-table-wrap table-responsive">
     <table class="data-table">
       <thead>
         <tr>

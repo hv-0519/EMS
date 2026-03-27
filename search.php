@@ -107,7 +107,7 @@ require_once __DIR__ . '/includes/header.php';
     </h2>
     <a href="<?= APP_URL ?>/modules/employees/index.php?search=<?= urlencode($q) ?>" class="btn btn-outline btn-sm">View All</a>
   </div>
-  <div class="data-table-wrap">
+  <div class="data-table-wrap table-responsive">
     <table class="data-table">
       <thead><tr><th>Employee</th><th>Department</th><th>Designation</th><th>Email</th><th>Status</th><th>Action</th></tr></thead>
       <tbody>
@@ -180,7 +180,7 @@ require_once __DIR__ . '/includes/header.php';
     </h2>
     <a href="<?= APP_URL ?>/modules/leave/index.php" class="btn btn-outline btn-sm">View All</a>
   </div>
-  <div class="data-table-wrap">
+  <div class="data-table-wrap table-responsive">
     <table class="data-table">
       <thead><tr><th>Employee</th><th>Type</th><th>From</th><th>To</th><th>Reason</th><th>Status</th></tr></thead>
       <tbody>

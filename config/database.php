@@ -5,6 +5,33 @@
 
 date_default_timezone_set('Asia/Kolkata');
 
+function detectAppUrl(): string {
+    $scheme = 'http';
+    if (!empty($_SERVER['HTTPS']) && strtolower((string)$_SERVER['HTTPS']) !== 'off') {
+        $scheme = 'https';
+    } elseif (!empty($_SERVER['REQUEST_SCHEME'])) {
+        $scheme = (string)$_SERVER['REQUEST_SCHEME'];
+    }
+
+    $host = $_SERVER['HTTP_HOST'] ?? 'localhost';
+    $docRoot = isset($_SERVER['DOCUMENT_ROOT']) ? str_replace('\\', '/', (string)realpath($_SERVER['DOCUMENT_ROOT'])) : '';
+    $appRoot = str_replace('\\', '/', (string)realpath(__DIR__ . '/..'));
+    $basePath = '';
+
+    if ($docRoot && $appRoot && str_starts_with(strtolower($appRoot), strtolower($docRoot))) {
+        $basePath = substr($appRoot, strlen($docRoot));
+    } elseif (!empty($_SERVER['SCRIPT_NAME'])) {
+        $scriptDir = str_replace('\\', '/', dirname((string)$_SERVER['SCRIPT_NAME']));
+        if ($scriptDir !== '/' && $scriptDir !== '.') {
+            $parts = array_values(array_filter(explode('/', trim($scriptDir, '/'))));
+            if ($parts) $basePath = '/' . $parts[0];
+        }
+    }
+
+    $basePath = trim(str_replace('\\', '/', $basePath), '/');
+    return $scheme . '://' . $host . ($basePath !== '' ? '/' . $basePath : '');
+}
+
 define('DB_HOST',    'localhost');
 define('DB_USER',    'root');
 define('DB_PASS',    '');
@@ -13,7 +40,7 @@ define('DB_CHARSET', 'utf8mb4');
 
 // App settings – change APP_URL to match your WAMP path
 define('APP_NAME',    'EmpAxis');
-define('APP_URL',     'http://localhost/ems2');
+define('APP_URL',     detectAppUrl());
 define('APP_VERSION', '2.0.0');
 
 // Mail settings (configure SMTP in Settings page for real email)
